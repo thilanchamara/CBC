@@ -33,7 +33,6 @@ const authenticate = (req, res, next) => {
   }
 };
 app.use("/api/user", userRouter);
-app.use("/api/student", authenticate, studentRouter);
 app.use("/api/product", authenticate, productRouter);
 
 mongoose.connection.once("open", () => {
