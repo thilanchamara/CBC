@@ -14,11 +14,9 @@ export const createUser = async (req, res) => {
 
     if (req.body.type === "admin") {
       if (req.user?.type !== "admin") {
-        return res
-          .status(401)
-          .json({
-            message: "please login as an admin to create admin account",
-          });
+        return res.status(401).json({
+          message: "please login as an admin to create admin account",
+        });
       }
     }
 
