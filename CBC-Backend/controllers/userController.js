@@ -12,6 +12,16 @@ export const createUser = async (req, res) => {
     if (duplicate)
       return res.status(400).json({ message: "email already exists" });
 
+    if (req.body.type === "admin") {
+      if (req.user?.type !== "admin") {
+        return res
+          .status(401)
+          .json({
+            message: "please login as an admin to create admin account",
+          });
+      }
+    }
+
     const hashPassword = bcrypt.hashSync(password, 10);
     const newUser = {
       email,
