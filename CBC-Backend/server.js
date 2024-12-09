@@ -15,8 +15,8 @@ app.use(express.json());
 
 //middleware for the get the data from the token
 
-app.use("/api/user", authenticate, userRouter);
-app.use("/api/product", authenticate, productRouter);
+app.use("/api/user", userRouter);
+app.use("/api/product", productRouter);
 
 mongoose.connection.once("open", () => {
   console.log("connected to the db");
