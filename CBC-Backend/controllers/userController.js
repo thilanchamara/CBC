@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 export const createUser = async (req, res) => {
   try {
-    const { email, firstname, lastname, password } = req.body;
+    const { email, firstname, lastname, password, type } = req.body;
     if (!email || !firstname || !lastname || !password)
       return res.status(400).json({ message: "All the field s are required" });
 
@@ -14,6 +14,7 @@ export const createUser = async (req, res) => {
 
     if (req.body.type === "admin") {
       if (req.user?.type !== "admin") {
+        // console.log(req.user.type);
         return res.status(401).json({
           message: "please login as an admin to create admin account",
         });
@@ -26,9 +27,13 @@ export const createUser = async (req, res) => {
       firstname,
       lastname,
       password: hashPassword,
+      type,
     };
     const result = await User.create(newUser);
-    res.status(200).json(result);
+    res.status(200).json({
+      message: "new user created",
+      user: result,
+    });
   } catch (err) {
     console.log(err);
   }
@@ -53,7 +58,7 @@ export const userLogIn = async (req, res) => {
       firstname: checkUser.firstname,
       lastname: checkUser.lastname,
       isBlocked: checkUser.isBlocked,
-      userType: checkUser.userType,
+      type: checkUser.type,
       profilePicLink: checkUser.profilePicLink,
     },
     "CBC-Backend"
@@ -64,3 +69,6 @@ export const userLogIn = async (req, res) => {
     token: token,
   });
 };
+
+//email: "john.do@example.com,"password":"securepassword123"-customer
+//email: "john.doe@example.com,"password":"securepassword123"-admin
