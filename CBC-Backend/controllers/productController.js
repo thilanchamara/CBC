@@ -1,4 +1,5 @@
 import Product from "../models/product.js";
+import { isAdmin } from "./userController.js";
 
 export const getProducts = async (req, res) => {
   try {
@@ -8,20 +9,14 @@ export const getProducts = async (req, res) => {
     console.log(err);
   }
 };
-export const getProductByname = async (req, res) => {
-  const { name } = req.params;
+export const addProduct = async (req, res) => {
   try {
-    const result = await Product.findOne({ name });
-    res.json({ list: result });
-  } catch (err) {
-    console.log(err);
-  }
-};
+    if (!isAdmin) {
+      return res.status(400).json({
+        message: " please login as an admin to add product",
+      });
+    }
 
-export const createProduct = async (req, res) => {
-  try {
-    // await Product.create(req.body);
-    console.log(req.user);
     res.status(200).json({ message: "new product added suceesful" });
   } catch (err) {
     console.log(err);
