@@ -69,6 +69,18 @@ export const userLogIn = async (req, res) => {
     token: token,
   });
 };
+export const isAdmin = (req) => {
+  if (req.user?.type !== "admin") {
+    return false;
+  }
+  return true;
+};
+export const isCustomer = (req) => {
+  if (req.user?.type !== "customer") {
+    return false;
+  }
+  return true;
+};
 
 //email: "john.do@example.com,"password":"securepassword123"-customer
 //email: "john.doe@example.com,"password":"securepassword123"-admin
