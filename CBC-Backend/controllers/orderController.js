@@ -2,7 +2,7 @@ import Order from "../models/order.js";
 
 export const createOrder = async (req, res) => {
   try {
-    console.log(req.user);
+    //console.log(req.user);
     if (req.user.type !== "Customer") {
       return res.json({
         message: "please login fist",

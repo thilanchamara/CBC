@@ -11,13 +11,18 @@ export const getProducts = async (req, res) => {
 };
 export const addProduct = async (req, res) => {
   try {
-    if (!isAdmin) {
+    const productData = req.body;
+    console.log(req.user);
+    if (req.user.type !== "admin") {
       return res.status(400).json({
         message: " please login as an admin to add product",
       });
     }
-
-    res.status(200).json({ message: "new product added suceesful" });
+    const result = await Product.create(productData);
+    res.status(200).json({
+      message: "new product added suceesful",
+      product: result,
+    });
   } catch (err) {
     console.log(err);
   }
