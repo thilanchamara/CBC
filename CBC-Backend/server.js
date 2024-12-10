@@ -6,6 +6,7 @@ import connectDB from "./config/dbConnect.js";
 import productRouter from "./routes/productRouter.js";
 import userRouter from "./routes/userRouter.js";
 import jwt, { decode } from "jsonwebtoken";
+import orderRouter from "./routes/orderRouter.js";
 dotenv.config();
 connectDB();
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json());
 
 app.use("/api/user", userRouter);
 app.use("/api/product", productRouter);
+app.use("/api/order", orderRouter);
 
 mongoose.connection.once("open", () => {
   console.log("connected to the db");
