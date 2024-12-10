@@ -12,20 +12,21 @@ const orderSchema = new mongoose.Schema({
   },
   orderItems: [
     {
-      name: {
-        type: String,
-        required: true,
-      },
-      price: {
-        type: Number,
-        required: true,
-      },
-      image: {
-        type: Number,
-        required: true,
-      },
+      // name: {
+      //   type: String,
+      //   required: true,
+      // },
+      // price: {
+      //   type: Number,
+      //   required: true,
+      // },
+      // image: {
+      //   type: Number,
+      //   required: true,
+      // },
       productId: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
         required: true,
       },
       quantity: {
