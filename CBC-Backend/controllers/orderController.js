@@ -1,5 +1,5 @@
 import Order from "../models/order.js";
-import 
+import Product from "../models/product.js";
 
 export const createOrder = async (req, res) => {
   try {
@@ -23,6 +23,26 @@ export const createOrder = async (req, res) => {
     order.email = req.user.email;
     order.orderNumber = newOrderNumber;
 
+    const newOrderItems = req.body.orderItems;
+    if (newOrderItems.length === 0) {
+      return res.json({ message: "there is no order item" });
+    }
+
+    // const newOrderItmes=orderItems.map((item)=>{
+    //   const product=await Product.findOne({productId:item.productId});
+
+    // }
+
+    // )
+    for (let i = 0; i < newOrderItems.length; i++) {
+      const product = await Product.findOne({
+        productId: newOrderItems[i].productId,
+      });
+      newOrderItems[i].name = product.productName;
+      newOrderItems[i].price = product.price;
+      newOrderItems[i].image = product.images[0];
+    }
+    order.orderItems = newOrderItems;
     const newOrder = new Order(order);
     await newOrder.save();
     res.json({
